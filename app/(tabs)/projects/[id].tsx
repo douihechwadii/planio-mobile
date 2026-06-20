@@ -1,4 +1,3 @@
-// app/(tabs)/projects/[id].tsx
 import { StatusChip } from '@/components/StatusChip';
 import { MonthlyPlanGrid } from '@/components/projects/MonthlyPlanGrid';
 import { useMonthlyPlan, useProject } from '@/hooks/useProjects';

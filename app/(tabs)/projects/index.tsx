@@ -1,4 +1,3 @@
-// app/(tabs)/projects.tsx (or wherever your tab route lives)
 import { StatusChip } from '@/components/StatusChip';
 import { useProjects } from '@/hooks/useProjects';
 import { Project } from '@/types/project';
@@ -95,7 +94,7 @@ const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   header: { fontWeight: '700' },
   subheader: { color: '#666', marginBottom: 12 },
-  search: { marginBottom: 12 },
+  search: { marginBottom: 12, borderRadius: 8 },
   list: { paddingBottom: 24 },
   card: { marginBottom: 12, borderRadius: 8 },
   projectName: { fontWeight: '700', marginBottom: 2 },
