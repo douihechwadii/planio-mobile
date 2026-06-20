@@ -43,6 +43,9 @@ export default function TabsLayout() {
             <MaterialIcons name='folder' size={size} color={color}/>
         )
     }} />
+
+    <Tabs.Screen name="projects/[id]" options={{ href: null }} />
+
     <Tabs.Screen 
     name="resources/index"
     options={{
