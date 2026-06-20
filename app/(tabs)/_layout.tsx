@@ -1,18 +1,37 @@
+import { theme } from '@/theme/theme';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Tabs } from "expo-router";
 
 
 export default function TabsLayout() {
   return <Tabs screenOptions={{
-    headerTitleAlign: "center"
+    headerTitleAlign: "center",
+    tabBarStyle: {
+        backgroundColor: theme.colors.secondary,
+        height: 60,
+    },
+
+    tabBarLabelStyle: {
+        fontSize: 12,
+        fontWeight: '600'
+    },
+
+    tabBarActiveTintColor: theme.colors.primary,
+    tabBarInactiveTintColor: theme.colors.background,
+
+    headerStyle: {
+        backgroundColor: theme.colors.secondary
+    },
+
+    headerTintColor: theme.colors.background
   }}>
     <Tabs.Screen 
     name="index"
     options={{
         headerTitle: "Dashboard",
         tabBarLabel: "Dashboard",
-        tabBarIcon: () => (
-            <MaterialIcons name='grid-view' size={24}/>
+        tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name='grid-view' size={size} color={color}/>
         )
     }} />
     <Tabs.Screen 
@@ -20,8 +39,8 @@ export default function TabsLayout() {
     options={{
         headerTitle: "Projects",
         tabBarLabel: "Projects",
-        tabBarIcon: () => (
-            <MaterialIcons name='folder' size={24}/>
+        tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name='folder' size={size} color={color}/>
         )
     }} />
     <Tabs.Screen 
@@ -29,8 +48,8 @@ export default function TabsLayout() {
     options={{
         headerTitle: "Resources",
         tabBarLabel: "Resources",
-        tabBarIcon: () => (
-            <MaterialIcons name='people' size={24}/>
+        tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name='people' size={size} color={color}/>
         )
     }} />
     <Tabs.Screen 
@@ -38,8 +57,8 @@ export default function TabsLayout() {
     options={{
         headerTitle: "Assignments",
         tabBarLabel: "Assignments",
-        tabBarIcon: () => (
-            <MaterialIcons name='swap-horiz' size={24}/>
+        tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name='swap-horiz' size={size} color={color}/>
         )
     }} />
   </Tabs>;
