@@ -44,7 +44,7 @@ export default function TabsLayout() {
         )
     }} />
 
-    <Tabs.Screen name="projects/[id]" options={{ href: null }} />
+    <Tabs.Screen name="projects/[id]" options={{ href: null, title: "Projects Details"}} />
 
     <Tabs.Screen 
     name="resources/index"
@@ -55,6 +55,9 @@ export default function TabsLayout() {
             <MaterialIcons name='people' size={size} color={color}/>
         )
     }} />
+
+    <Tabs.Screen name='resources/[id]' options={{ href: null, title: "Resource Details" }} />
+
     <Tabs.Screen 
     name="assignments/index"
     options={{
