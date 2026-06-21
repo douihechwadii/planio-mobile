@@ -1,4 +1,3 @@
-// app/(tabs)/assignments/index.tsx
 import {
   useAssignments,
   useAssignmentsByProject,
