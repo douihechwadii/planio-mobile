@@ -1,4 +1,3 @@
-// app/(tabs)/resources/index.tsx
 import { StatusChip } from '@/components/StatusChip';
 import { useResources } from '@/hooks/useResources';
 import { Resource } from '@/types/resource';
