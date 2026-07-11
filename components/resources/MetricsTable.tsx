@@ -1,3 +1,4 @@
+import { theme } from '@/theme/theme';
 import { ResourceMetrics } from '@/types/resource';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -24,7 +25,7 @@ function getCellStyle(key: string, value: number) {
   const isAD = key === 'absenceDays';
   const isRD = key === 'remainingDays';
 
-  let color = '#1a1a1a';
+  let color: string = theme.colors.onPrimaryContainer;
   let fontWeight: '400' | '500' | '700' = '400';
 
   if (isRD && value < 0) {
@@ -102,17 +103,17 @@ export function MetricsTable({ metrics, year }: MetricsTableProps) {
 const styles = StyleSheet.create({
   container: {
     borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
+    borderWidth: 2,
+    borderColor: theme.colors.primary,
     overflow: 'hidden',
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.background,
   },
   tableRow: { flexDirection: 'row' },
   labelColumn: {
     width: LABEL_WIDTH,
-    borderRightWidth: 1,
-    borderRightColor: '#e0e0e0',
-    backgroundColor: '#fafafa',
+    borderRightWidth: 2,
+    borderRightColor: theme.colors.primary,
+    backgroundColor: theme.colors.background,
   },
   headerRow: { flexDirection: 'row' },
   dataRow: { flexDirection: 'row' },
@@ -120,16 +121,16 @@ const styles = StyleSheet.create({
     height: ROW_HEIGHT,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    backgroundColor: theme.colors.background,
+    borderBottomWidth: 2,
+    borderBottomColor: theme.colors.primary,
   },
   cell: {
     height: ROW_HEIGHT,
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomColor: theme.colors.primary,
   },
   labelCell: {
     width: LABEL_WIDTH,
@@ -137,9 +138,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   dataCell: { width: COLUMN_WIDTH },
-  headerText: { fontSize: 12, fontWeight: '700', color: '#555' },
-  labelText: { fontSize: 11, fontWeight: '600', color: '#333' },
+  headerText: { fontSize: 12, fontWeight: '700', color: theme.colors.secondary },
+  labelText: { fontSize: 11, fontWeight: '600', color: theme.colors.secondary },
   valueText: { fontSize: 13, fontVariant: ['tabular-nums'] },
-  empty: { color: '#777', fontSize: 13 },
-  footnote: { fontSize: 11, color: '#999', padding: 8 },
+  empty: { color: theme.colors.primary, fontSize: 13 },
+  footnote: { fontSize: 11, color: theme.colors.primary, padding: 8 },
 });

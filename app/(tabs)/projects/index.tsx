@@ -1,5 +1,6 @@
 import { StatusChip } from '@/components/StatusChip';
 import { useProjects } from '@/hooks/useProjects';
+import { theme } from '@/theme/theme';
 import { Project } from '@/types/project';
 import { router } from 'expo-router';
 import React from 'react';
@@ -41,6 +42,8 @@ export default function ProjectsScreen() {
 
       <Searchbar
         placeholder="Search projects"
+        placeholderTextColor={theme.colors.onSecondaryContainer}
+        iconColor={theme.colors.onSecondaryContainer}
         value={search}
         onChangeText={setSearch}
         style={styles.search}
@@ -92,14 +95,14 @@ export default function ProjectsScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, paddingHorizontal: 16, paddingTop: 12 },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  header: { fontWeight: '700' },
-  subheader: { color: '#666', marginBottom: 12 },
-  search: { marginBottom: 12, borderRadius: 8 },
+  header: { fontWeight: '700', color: theme.colors.secondary},
+  subheader: { color: theme.colors.primary, marginBottom: 12 },
+  search: { marginBottom: 12, borderRadius: 8, backgroundColor: theme.colors.background, borderColor: theme.colors.primary, borderWidth: 2 },
   list: { paddingBottom: 24 },
-  card: { marginBottom: 12, borderRadius: 8 },
-  projectName: { fontWeight: '700', marginBottom: 2 },
-  client: { color: '#555', marginBottom: 8 },
+  card: { marginBottom: 12, borderRadius: 8 , borderWidth: 2 , borderColor: theme.colors.primary , backgroundColor: theme.colors.background, overflow: "hidden" },
+  projectName: { fontWeight: '700', marginBottom: 2 , color: theme.colors.onPrimaryContainer},
+  client: { color: theme.colors.primary, marginBottom: 8 },
   row: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
-  dateLabel: { color: '#777' },
+  dateLabel: { color: theme.colors.onPrimaryContainer },
   statusRow: { flexDirection: 'row' },
 });

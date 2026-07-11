@@ -1,3 +1,4 @@
+import { theme } from '@/theme/theme';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Card, Chip, ProgressBar, Text } from 'react-native-paper';
@@ -23,7 +24,7 @@ function getProgressColor(ratio: number): string {
 
 export function MonthlyPlanGrid({ plans }: { plans: MonthlyPlanEntry[] }) {
   if (plans.length === 0) {
-    return <Text style={{ color: '#777' }}>No monthly plan data yet.</Text>;
+    return <Text style={{ color: theme.colors.primary }}>No monthly plan data yet.</Text>;
   }
 
   return (
@@ -77,11 +78,18 @@ export function MonthlyPlanGrid({ plans }: { plans: MonthlyPlanEntry[] }) {
 }
 
 const styles = StyleSheet.create({
-  row: { marginBottom: 10, borderRadius: 8 },
+  row: {
+    marginBottom: 10,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: theme.colors.primary,
+    backgroundColor: theme.colors.background,
+    overflow: 'hidden',
+  },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 },
-  month: { fontWeight: '700' },
+  month: { fontWeight: '700', color: theme.colors.secondary },
   assignableChip: { height: 32 },
   statsRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 },
-  statLabel: { color: '#666' },
+  statLabel: { color: theme.colors.primary },
   progressBar: { height: 6, borderRadius: 3 },
 });

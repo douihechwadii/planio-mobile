@@ -1,6 +1,7 @@
 import { StatusChip } from '@/components/StatusChip';
 import { MonthlyPlanGrid } from '@/components/projects/MonthlyPlanGrid';
 import { useMonthlyPlan, useProject } from '@/hooks/useProjects';
+import { theme } from '@/theme/theme';
 import { useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -24,7 +25,7 @@ export default function ProjectDetailScreen() {
   if (!project) {
     return (
       <View style={styles.center}>
-        <Text style={{ color: '#d32f2f' }}>Project not found.</Text>
+        <Text style={{ color: theme.colors.error }}>Project not found.</Text>
       </View>
     );
   }
@@ -75,12 +76,19 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   content: { padding: 16, paddingBottom: 32 },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  title: { fontWeight: '700' },
-  subtitle: { color: '#666', marginBottom: 12 },
+  title: { fontWeight: '700', color: theme.colors.secondary },
+  subtitle: { color: theme.colors.primary, marginBottom: 12 },
   statusRow: { marginBottom: 16 },
   statsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 24 },
-  statCard: { flexBasis: '47%', borderRadius: 8 },
-  statLabel: { color: '#777', marginBottom: 2 },
-  statValue: { fontWeight: '600' },
-  sectionTitle: { fontWeight: '700', marginBottom: 12 },
+  statCard: {
+    flexBasis: '47%',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: theme.colors.primary,
+    backgroundColor: theme.colors.background,
+    overflow: 'hidden',
+  },
+  statLabel: { color: theme.colors.primary, marginBottom: 2 },
+  statValue: { fontWeight: '600', color: theme.colors.onPrimaryContainer },
+  sectionTitle: { fontWeight: '700', marginBottom: 12, color: theme.colors.secondary },
 });

@@ -5,6 +5,7 @@ import {
 } from '@/hooks/useAssignments';
 import { useProjects } from '@/hooks/useProjects';
 import { useResources } from '@/hooks/useResources';
+import { theme } from '@/theme/theme';
 import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { ActivityIndicator, Button, Card, Menu, SegmentedButtons, Text } from 'react-native-paper';
@@ -57,8 +58,12 @@ export default function AssignmentsScreen() {
           setSelectedId(0);
         }}
         buttons={[
-          { value: 'project', label: 'By Project' },
-          { value: 'resource', label: 'By Resource' },
+          { value: 'project', label: 'By Project', style : styles.byButton, labelStyle: {
+            color: filterMode === 'project' ? theme.colors.primary : theme.colors.onSecondaryContainer,
+          }},
+          { value: 'resource', label: 'By Resource', style: styles.byButton, labelStyle: {
+            color: filterMode === 'resource' ? theme.colors.primary : theme.colors.onSecondaryContainer,
+          }},
         ]}
         style={styles.segmented}
       />
@@ -67,10 +72,15 @@ export default function AssignmentsScreen() {
         visible={menuVisible}
         onDismiss={() => setMenuVisible(false)}
         anchor={
-          <Button mode="outlined" onPress={() => setMenuVisible(true)} style={styles.filterButton}>
+          <Button
+            onPress={() => setMenuVisible(true)}
+            style={styles.filterButton}
+            textColor={theme.colors.onPrimaryContainer}
+          >
             {selectedLabel}
           </Button>
         }
+        contentStyle={styles.menuContent}
       >
         <Menu.Item
           onPress={() => {
@@ -78,6 +88,8 @@ export default function AssignmentsScreen() {
             setMenuVisible(false);
           }}
           title="All"
+          titleStyle={styles.menuItemTitle}
+          rippleColor={`${theme.colors.primary}33`}
         />
         {options?.map((item: any) => (
           <Menu.Item
@@ -87,6 +99,8 @@ export default function AssignmentsScreen() {
               setMenuVisible(false);
             }}
             title={'fullName' in item ? item.fullName : item.name}
+            titleStyle={styles.menuItemTitle}
+            rippleColor={`${theme.colors.primary}33`}
           />
         ))}
       </Menu>
@@ -136,19 +150,42 @@ export default function AssignmentsScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, paddingHorizontal: 16, paddingTop: 12 },
-  header: { fontWeight: '700' },
-  subheader: { color: '#666', marginBottom: 12 },
-  segmented: { marginBottom: 12 },
-  filterButton: { marginBottom: 12, alignSelf: 'flex-start' },
+  header: { fontWeight: '700', color: theme.colors.secondary },
+  subheader: { color: theme.colors.primary, marginBottom: 12 },
+  segmented: { marginBottom: 12, },
+  filterButton: {
+    marginBottom: 12,
+    alignSelf: 'flex-start',
+    borderWidth: 2,
+    borderColor: theme.colors.primary,
+    borderRadius: 8
+  },
+  menuContent: {
+    backgroundColor: theme.colors.background,
+    borderWidth: 2,
+    borderColor: theme.colors.primary,
+    borderRadius: 8,
+  },
+  menuItemTitle: {
+    color: theme.colors.onPrimaryContainer,
+  },
   loader: { marginTop: 24 },
   list: { paddingBottom: 24 },
-  card: { marginBottom: 12, borderRadius: 8 },
-  projectName: { fontWeight: '700', color: '#1565c0', marginBottom: 2 },
-  resourceName: { fontWeight: '600', marginBottom: 2 },
-  role: { color: '#777', marginBottom: 8 },
+  card: {
+    marginBottom: 12,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: theme.colors.primary,
+    backgroundColor: theme.colors.background,
+    overflow: 'hidden',
+  },
+  projectName: { fontWeight: '700', color: theme.colors.onPrimaryContainer, marginBottom: 2 },
+  resourceName: { fontWeight: '600', color: theme.colors.onPrimaryContainer, marginBottom: 2 },
+  role: { color: theme.colors.primary, marginBottom: 8 },
   detailRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  detailLabel: { color: '#666' },
-  daysAssigned: { fontWeight: '700', color: '#1565c0' },
-  empty: { textAlign: 'center', color: '#777', marginTop: 24 },
-  client: { color: '#999', marginBottom: 4 },
+  detailLabel: { color: theme.colors.primary },
+  daysAssigned: { fontWeight: '700', color: theme.colors.onPrimaryContainer },
+  empty: { textAlign: 'center', color: theme.colors.primary, marginTop: 24 },
+  client: { color: theme.colors.primary, marginBottom: 4 },
+  byButton: { backgroundColor: theme.colors.background, borderRadius: 8 , borderWidth: 2, borderColor: theme.colors.primary},
 });

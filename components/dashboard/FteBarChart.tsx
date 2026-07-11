@@ -29,7 +29,7 @@ export function FteBarChart({ data }: { data: MonthlyCapacity[] }) {
         </Text>
         <BarChart
           data={chartData}
-          width={screenWidth}
+          width={screenWidth - 15}
           height={220}
           fromZero
           showValuesOnTopOfBars

@@ -4,6 +4,7 @@ import { GapLineChart } from '@/components/dashboard/GapLineChart';
 import { KpiGrid } from '@/components/dashboard/KpiGrid';
 import { WorkloadTable } from '@/components/dashboard/WorkloadTable';
 import { useAlerts, useDashboard, useWorkload } from '@/hooks/useDashboard';
+import { theme } from '@/theme/theme';
 import React from 'react';
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { ActivityIndicator, Chip, Text } from 'react-native-paper';
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
   content: { padding: 16, gap: 16, paddingBottom: 32 },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   title: { fontWeight: '700' },
-  subtitle: { color: '#666' },
+  subtitle: { color: theme.colors.primary },
   yearRow: { flexDirection: 'row', gap: 6 },
   chip: {},
   center: { justifyContent: 'center', alignItems: 'center', paddingVertical: 48 },

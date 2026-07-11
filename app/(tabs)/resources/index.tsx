@@ -1,5 +1,6 @@
 import { StatusChip } from '@/components/StatusChip';
 import { useResources } from '@/hooks/useResources';
+import { theme } from '@/theme/theme';
 import { Resource } from '@/types/resource';
 import { router } from 'expo-router';
 import React from 'react';
@@ -41,9 +42,12 @@ export default function ResourcesScreen() {
 
       <Searchbar
         placeholder="Search resources"
+        placeholderTextColor={theme.colors.onSecondaryContainer}
+        iconColor={theme.colors.onSecondaryContainer}
         value={search}
         onChangeText={setSearch}
         style={styles.search}
+        inputStyle={styles.searchInput}
       />
 
       <FlatList
@@ -88,13 +92,27 @@ export default function ResourcesScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, paddingHorizontal: 16, paddingTop: 12 },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  header: { fontWeight: '700' },
-  subheader: { color: '#666', marginBottom: 12 },
-  search: { marginBottom: 12 },
+  header: { fontWeight: '700', color: theme.colors.secondary },
+  subheader: { color: theme.colors.primary, marginBottom: 12 },
+  search: {
+    marginBottom: 12,
+    borderRadius: 8,
+    backgroundColor: theme.colors.background,
+    borderColor: theme.colors.primary,
+    borderWidth: 2,
+  },
+  searchInput: { color: theme.colors.primary },
   list: { paddingBottom: 24 },
-  card: { marginBottom: 12, borderRadius: 8 },
-  name: { fontWeight: '700', marginBottom: 2 },
-  role: { color: '#555', marginBottom: 2 },
-  email: { color: '#888', marginBottom: 8 },
+  card: {
+    marginBottom: 12,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: theme.colors.primary,
+    backgroundColor: theme.colors.background,
+    overflow: 'hidden',
+  },
+  name: { fontWeight: '700', marginBottom: 2, color: theme.colors.onPrimaryContainer },
+  role: { color: theme.colors.primary, marginBottom: 2 },
+  email: { color: theme.colors.primary, marginBottom: 8 },
   statusRow: { flexDirection: 'row' },
 });

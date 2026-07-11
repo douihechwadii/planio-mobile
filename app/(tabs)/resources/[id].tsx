@@ -1,6 +1,7 @@
 import { StatusChip } from '@/components/StatusChip';
 import { MetricsTable } from '@/components/resources/MetricsTable';
 import { useResource, useResourceMetrics } from '@/hooks/useResources';
+import { theme } from '@/theme/theme';
 import { useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -28,7 +29,7 @@ export default function ResourceDetailScreen() {
   if (!resource) {
     return (
       <View style={styles.center}>
-        <Text style={{ color: '#d32f2f' }}>Resource not found.</Text>
+        <Text style={{ color: theme.colors.error }}>Resource not found.</Text>
       </View>
     );
   }
@@ -77,7 +78,10 @@ export default function ResourceDetailScreen() {
               selected={year === y}
               onPress={() => setYear(y)}
               style={styles.yearChip}
-              compact
+              textStyle={{
+                color: year === y ? theme.colors.primary : theme.colors.onSecondaryContainer,
+              }}
+              icon={() => null}
             >
               {y}
             </Chip>
@@ -98,15 +102,26 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   content: { padding: 16, paddingBottom: 32 },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  title: { fontWeight: '700' },
-  subtitle: { color: '#666', marginBottom: 8 },
+  title: { fontWeight: '700', color: theme.colors.secondary },
+  subtitle: { color: theme.colors.primary, marginBottom: 8 },
   statusRow: { marginBottom: 16 },
   statsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 24 },
-  statCard: { flexBasis: '47%', borderRadius: 8 },
-  statLabel: { color: '#777', marginBottom: 2 },
-  statValue: { fontWeight: '600' },
+  statCard: {
+    flexBasis: '47%',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: theme.colors.primary,
+    backgroundColor: theme.colors.background,
+    overflow: 'hidden',
+  },
+  statLabel: { color: theme.colors.primary, marginBottom: 2 },
+  statValue: { fontWeight: '600', color: theme.colors.onPrimaryContainer },
   metricsHeader: { marginBottom: 12 },
-  sectionTitle: { fontWeight: '700', marginBottom: 8 },
+  sectionTitle: { fontWeight: '700', marginBottom: 8, color: theme.colors.secondary },
   yearRow: { flexDirection: 'row', gap: 8 },
-  yearChip: {},
+  yearChip: {
+    backgroundColor: theme.colors.background,
+    borderWidth: 2,
+    borderColor: theme.colors.primary,
+  },
 });
