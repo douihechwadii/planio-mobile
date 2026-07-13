@@ -1,4 +1,5 @@
 // src/components/dashboard/FteForecastTable.tsx
+import { theme } from '@/theme/theme';
 import { MonthlyCapacity } from '@/types/dashboard';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -41,8 +42,8 @@ export function FteForecastTable({ data }: { data: MonthlyCapacity[] }) {
 }
 
 const styles = StyleSheet.create({
-  card: { borderRadius: 8 },
-  title: { fontWeight: '700', marginBottom: 12, paddingHorizontal: 16 },
+  card: { borderRadius: 8 , backgroundColor: theme.colors.background, borderWidth: 2, borderColor: theme.colors.primary},
+  title: { fontWeight: '700', marginBottom: 12, paddingHorizontal: 16 , color: theme.colors.onPrimaryContainer},
   row: { flexDirection: 'row' },
   cell: {
     width: CELL_WIDTH,
@@ -50,9 +51,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderColor: theme.colors.primary,
   },
-  headerCell: { backgroundColor: '#f5f5f5', borderBottomWidth: 1, borderBottomColor: '#e0e0e0' },
-  headerText: { fontSize: 12, fontWeight: '700', color: '#555' },
-  valueText: { fontSize: 13, fontFamily: 'monospace', color: '#333' },
+  headerCell: { backgroundColor: '#f5f5f5', borderBottomWidth: 1, borderColor: theme.colors.primary },
+  headerText: { fontSize: 12, fontWeight: '700', color: theme.colors.primary },
+  valueText: { fontSize: 13, fontFamily: 'monospace', color: theme.colors.onSecondaryContainer },
 });

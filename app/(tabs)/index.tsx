@@ -43,7 +43,11 @@ export default function DashboardScreen() {
         </View>
         <View style={styles.yearRow}>
           {years.map((y) => (
-            <Chip key={y} selected={year === y} onPress={() => setYear(y)} compact style={styles.chip}>
+            <Chip key={y} selected={year === y} onPress={() => setYear(y)} compact style={styles.chip} textStyle ={{
+              color: year === y ? theme.colors.primary : theme.colors.onSecondaryContainer,
+            }}
+            icon={()=> null}
+            >
               {y}
             </Chip>
           ))}
@@ -76,7 +80,11 @@ export default function DashboardScreen() {
               selected={workloadMonth === m.value}
               onPress={() => setWorkloadMonth(m.value)}
               compact
-              style={styles.chip}
+              style={styles.monthRowChip}
+              textStyle={{
+                color: workloadMonth === m.value ? theme.colors.primary : theme.colors.onSecondaryContainer,
+              }}
+              icon={() => null}
             >
               {m.label}
             </Chip>
@@ -96,13 +104,14 @@ export default function DashboardScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   content: { padding: 16, gap: 16, paddingBottom: 32 },
-  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
-  title: { fontWeight: '700' },
+  header: { flexDirection: 'column', justifyContent: 'space-between', alignItems: 'flex-start', color: theme.colors.onPrimaryContainer },
+  title: { fontWeight: '700' , color: theme.colors.onPrimaryContainer},
   subtitle: { color: theme.colors.primary },
-  yearRow: { flexDirection: 'row', gap: 6 },
-  chip: {},
+  yearRow: { flexDirection: 'row', gap: 6 , marginTop: 12},
+  chip: {backgroundColor: theme.colors.background, borderWidth: 2, borderColor: theme.colors.primary,},
   center: { justifyContent: 'center', alignItems: 'center', paddingVertical: 48 },
   sectionHeader: { gap: 8 },
-  sectionTitle: { fontWeight: '700' },
+  sectionTitle: { fontWeight: '700', color: theme.colors.onPrimaryContainer },
   monthRow: { flexDirection: 'row' },
+  monthRowChip : { backgroundColor: theme.colors.background, borderWidth: 2, borderColor: theme.colors.primary, marginRight: 6, }
 });

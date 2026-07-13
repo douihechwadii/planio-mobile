@@ -1,3 +1,4 @@
+import { theme } from '@/theme/theme';
 import React from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import { LineChart } from 'react-native-gifted-charts';
@@ -15,7 +16,7 @@ export function GapLineChart({ data }: { data: MonthlyCapacity[] }) {
   const lineData = data.map((d) => ({
     value: parseFloat(d.gap.toFixed(2)),
     label: shortMonth(d.month),
-    labelTextStyle: { color: '#666', fontSize: 10 },
+    labelTextStyle: { color: theme.colors.onPrimaryContainer,  fontSize: 10 },
     dataPointColor: d.gap < 0 ? '#d32f2f' : '#2e7d32',
     dataPointRadius: 4,
   }));
@@ -40,7 +41,7 @@ export function GapLineChart({ data }: { data: MonthlyCapacity[] }) {
           data={lineData}
           areaChart
           curved
-          width={screenWidth - 28}
+          width={screenWidth - 18}
           height={120}
           color="#c62828"
           startFillColor="rgba(198,40,40,0.15)"
@@ -55,20 +56,22 @@ export function GapLineChart({ data }: { data: MonthlyCapacity[] }) {
             dashGap: 4,
             thickness: 1,
           }}
-          yAxisLabelWidth={28}
-          yAxisTextStyle={{ color: '#999', fontSize: 10 }}
-          xAxisLabelTextStyle={{ color: '#666', fontSize: 10 }}
-          yAxisColor="#e0e0e0"
-          xAxisColor="#e0e0e0"
-          rulesColor="#f0f0f0"
+          yAxisLabelWidth={16}
+          yAxisTextStyle={{ color: theme.colors.onPrimaryContainer, fontSize: 10 , textAlign: "left"}}
+          xAxisLabelTextStyle={{ color: theme.colors.onPrimaryContainer, fontSize: 10 }}
+          yAxisColor= {theme.colors.onPrimaryContainer}
+          xAxisColor= {theme.colors.onPrimaryContainer}
+          rulesColor= {theme.colors.onPrimaryContainer}
           rulesType="solid"
           noOfSections={4}
           mostNegativeValue={yMin}
           initialSpacing={16}
           spacing={(screenWidth - 36) / Math.max(data.length, 1)}
           xAxisLabelsAtBottom
-          labelsExtraHeight={16}
+          labelsExtraHeight={12}
           disableScroll
+          rulesLength={screenWidth - 24}
+          xAxisLength={screenWidth - 24}
         />
       </Card.Content>
     </Card>
@@ -76,7 +79,7 @@ export function GapLineChart({ data }: { data: MonthlyCapacity[] }) {
 }
 
 const styles = StyleSheet.create({
-  card: { borderRadius: 8 },
-  title: { fontWeight: '700', marginBottom: 8 },
+  card: { borderRadius: 8 , backgroundColor: theme.colors.background, borderWidth: 2, borderColor: theme.colors.primary},
+  title: { fontWeight: '700', marginBottom: 8 , color: theme.colors.onPrimaryContainer},
   warning: { color: '#ed6c02', marginBottom: 12 },
 });

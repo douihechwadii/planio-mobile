@@ -1,3 +1,4 @@
+import { theme } from '@/theme/theme';
 import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { BarChart } from 'react-native-gifted-charts';
@@ -55,17 +56,23 @@ export function FteBarChart({ data }: { data: MonthlyCapacity[] }) {
           noOfSections={4}
           roundedTop
           hideRules={false}
-          rulesColor="#f0f0f0"
+          rulesColor= { theme.colors.onPrimaryContainer }
           rulesType="solid"
-          yAxisLabelWidth={28}
-          yAxisTextStyle={{ color: '#999', fontSize: 10 }}
-          xAxisLabelTextStyle={{ color: '#666', fontSize: 10 }}
-          yAxisColor="#e0e0e0"
-          xAxisColor="#e0e0e0"
+          yAxisLabelWidth={12}
+          yAxisTextStyle={{ color: theme.colors.onPrimaryContainer, fontSize: 10 }}
+          xAxisLabelTextStyle={{ color: theme.colors.onPrimaryContainer, fontSize: 10 }}
+          yAxisColor= { theme.colors.onPrimaryContainer }
+          xAxisColor= { theme.colors.onPrimaryContainer }
           width={screenWidth - 28}
           height={220}
           initialSpacing={4}
           disablePress
+          rulesLength={screenWidth - 24}
+          xAxisLength={screenWidth - 24}
+          yAxisLabelContainerStyle= {{
+            justifyContent: "center",
+            marginRight: 4
+          }}
         />
 
         <View style={styles.legend}>
@@ -82,8 +89,8 @@ export function FteBarChart({ data }: { data: MonthlyCapacity[] }) {
 }
 
 const styles = StyleSheet.create({
-  card: { borderRadius: 8 },
-  title: { fontWeight: '700', marginBottom: 16 },
+  card: { borderRadius: 8 , borderWidth: 2, borderColor: theme.colors.primary, backgroundColor: theme.colors.background},
+  title: { fontWeight: '700', marginBottom: 16 , color: theme.colors.onPrimaryContainer},
   legend: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginTop: 12 },
   legendItem: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   legendDot: { width: 10, height: 10, borderRadius: 5 },
