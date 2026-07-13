@@ -1,67 +1,75 @@
-// src/components/dashboard/GapLineChart.tsx
-import { MonthlyCapacity } from '@/types/dashboard';
-import React, { useCallback, useState } from 'react';
-import { LayoutChangeEvent, StyleSheet, View } from 'react-native';
-import { LineChart } from 'react-native-chart-kit';
+import React from 'react';
+import { Dimensions, StyleSheet } from 'react-native';
+import { LineChart } from 'react-native-gifted-charts';
 import { Card, Text } from 'react-native-paper';
+import { MonthlyCapacity } from '../../types/dashboard';
+
+const screenWidth = Dimensions.get('window').width - 64;
 
 const shortMonth = (ym: string) =>
   new Date(ym + '-01').toLocaleString('default', { month: 'short' });
 
-const CHART_HEIGHT = 220;
-
 export function GapLineChart({ data }: { data: MonthlyCapacity[] }) {
-  const [containerWidth, setContainerWidth] = useState(0);
+  const hasNegative = data.some((d) => d.gap < 0);
 
-  const onContainerLayout = useCallback((e: LayoutChangeEvent) => {
-    setContainerWidth(e.nativeEvent.layout.width);
-  }, []);
+  const lineData = data.map((d) => ({
+    value: parseFloat(d.gap.toFixed(2)),
+    label: shortMonth(d.month),
+    labelTextStyle: { color: '#666', fontSize: 10 },
+    dataPointColor: d.gap < 0 ? '#d32f2f' : '#2e7d32',
+    dataPointRadius: 4,
+  }));
 
-  const labels = data.map((d) => shortMonth(d.month));
-  const gaps = data.map((d) => d.gap);
-  const hasNegative = gaps.some((g) => g < 0);
+  const minGap = Math.min(...data.map((d) => d.gap));
+  const yMin = minGap < 0 ? Math.floor(minGap) - 1 : 0;
 
   return (
     <Card style={styles.card}>
-      <Card.Content style={styles.content}>
+      <Card.Content>
         <Text variant="titleSmall" style={styles.title}>
           Capacity GAP Trend
         </Text>
+
         {hasNegative && (
           <Text variant="bodySmall" style={styles.warning}>
-            ⚠ Negative GAP detected — capacity shortfall in some months
+            ⚠ Capacity shortfall detected in some months
           </Text>
         )}
 
-        <View style={styles.chartWrapper} onLayout={onContainerLayout}>
-          {containerWidth > 0 && (
-            <LineChart
-              data={{ labels, datasets: [{ data: gaps }] }}
-              width={containerWidth}
-              height={CHART_HEIGHT}
-              fromZero={false}
-              segments={8}
-              withHorizontalLabels={false}
-              // default reserved space for y-axis labels — kill it so the
-              // plot spans the full width
-              
-              formatYLabel={(y) => Math.round(Number(y)).toString()}
-              chartConfig={{
-                backgroundGradientFrom: '#fff',
-                backgroundGradientTo: '#fff',
-                decimalPlaces: 0,
-                color: (opacity = 1) => `rgba(198, 40, 40, ${opacity})`,
-                labelColor: () => '#666',
-                propsForVerticalLabels: { fontSize: 9 },
-                propsForHorizontalLabels: { fontSize: 10 },
-                propsForDots: { r: '4', strokeWidth: '2', stroke: '#fff' },
-              }}
-              getDotColor={(dataPoint) => (dataPoint < 0 ? '#d32f2f' : '#2e7d32')}
-              bezier
-              style={styles.chart}
-            />
-          )}
-        </View>
+        <LineChart
+          data={lineData}
+          areaChart
+          curved
+          width={screenWidth - 28}
+          height={120}
+          color="#c62828"
+          startFillColor="rgba(198,40,40,0.15)"
+          endFillColor="rgba(198,40,40,0)"
+          startOpacity={0.4}
+          endOpacity={0}
+          thickness={2}
+          referenceLine1Position={0}
+          referenceLine1Config={{
+            color: '#d32f2f',
+            dashWidth: 4,
+            dashGap: 4,
+            thickness: 1,
+          }}
+          yAxisLabelWidth={28}
+          yAxisTextStyle={{ color: '#999', fontSize: 10 }}
+          xAxisLabelTextStyle={{ color: '#666', fontSize: 10 }}
+          yAxisColor="#e0e0e0"
+          xAxisColor="#e0e0e0"
+          rulesColor="#f0f0f0"
+          rulesType="solid"
+          noOfSections={4}
+          mostNegativeValue={yMin}
+          initialSpacing={16}
+          spacing={(screenWidth - 36) / Math.max(data.length, 1)}
+          xAxisLabelsAtBottom
+          labelsExtraHeight={16}
+          disableScroll
+        />
       </Card.Content>
     </Card>
   );
@@ -69,9 +77,6 @@ export function GapLineChart({ data }: { data: MonthlyCapacity[] }) {
 
 const styles = StyleSheet.create({
   card: { borderRadius: 8 },
-  content: { paddingHorizontal: 0 },
-  title: { fontWeight: '700', marginBottom: 8, paddingHorizontal: 16 },
-  warning: { color: '#ed6c02', marginBottom: 8, paddingHorizontal: 16 },
-  chartWrapper: { width: '100%' },
-  chart: { borderRadius: 8, marginLeft: 0 },
+  title: { fontWeight: '700', marginBottom: 8 },
+  warning: { color: '#ed6c02', marginBottom: 12 },
 });

@@ -1,25 +1,46 @@
-import { MonthlyCapacity } from '@/types/dashboard';
 import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
-import { BarChart } from 'react-native-chart-kit';
+import { BarChart } from 'react-native-gifted-charts';
 import { Card, Text } from 'react-native-paper';
+import { MonthlyCapacity } from '../../types/dashboard';
 
-const screenWidth = Dimensions.get('window').width - 48; // padding offset
+const screenWidth = Dimensions.get('window').width - 64;
 
 const shortMonth = (ym: string) =>
   new Date(ym + '-01').toLocaleString('default', { month: 'short' });
 
-export function FteBarChart({ data }: { data: MonthlyCapacity[] }) {
-  const labels = data.map((d) => shortMonth(d.month));
+const COLORS = {
+  fteNeeded: '#c62828',
+  fteAssigned: '#2e7d32',
+  fteForecast: '#1565c0',
+};
 
-  // react-native-chart-kit only supports one dataset per BarChart visually,
-  // so we show fteNeeded as primary and overlay a legend note
-  const chartData = {
-    labels,
-    datasets: [
-      { data: data.map((d) => d.fteNeeded), color: () => '#c62828' },
-    ],
-  };
+const LEGEND = [
+  { color: COLORS.fteNeeded, label: 'FTE Needed' },
+  { color: COLORS.fteAssigned, label: 'FTE Assigned' },
+  { color: COLORS.fteForecast, label: 'FTE Forecast' },
+];
+
+export function FteBarChart({ data }: { data: MonthlyCapacity[] }) {
+  const barData = data.flatMap((d, i) => [
+    {
+      value: parseFloat(d.fteNeeded.toFixed(2)),
+      frontColor: COLORS.fteNeeded,
+      label: shortMonth(d.month),
+      labelTextStyle: { color: '#666', fontSize: 10 },
+      spacing: 2,
+    },
+    {
+      value: parseFloat(d.fteAssigned.toFixed(2)),
+      frontColor: COLORS.fteAssigned,
+      spacing: 2,
+    },
+    {
+      value: parseFloat(d.fteForecast.toFixed(2)),
+      frontColor: COLORS.fteForecast,
+      spacing: i < data.length - 1 ? 16 : 2,
+    },
+  ]);
 
   return (
     <Card style={styles.card}>
@@ -27,40 +48,34 @@ export function FteBarChart({ data }: { data: MonthlyCapacity[] }) {
         <Text variant="titleSmall" style={styles.title}>
           FTE Needed / Assigned / Forecast
         </Text>
+
         <BarChart
-          data={chartData}
-          width={screenWidth - 15}
+          data={barData}
+          barWidth={32}
+          noOfSections={4}
+          roundedTop
+          hideRules={false}
+          rulesColor="#f0f0f0"
+          rulesType="solid"
+          yAxisLabelWidth={28}
+          yAxisTextStyle={{ color: '#999', fontSize: 10 }}
+          xAxisLabelTextStyle={{ color: '#666', fontSize: 10 }}
+          yAxisColor="#e0e0e0"
+          xAxisColor="#e0e0e0"
+          width={screenWidth - 28}
           height={220}
-          fromZero
-          showValuesOnTopOfBars
-          yAxisLabel=""
-          yAxisSuffix=""
-          chartConfig={{
-            backgroundGradientFrom: '#fff',
-            backgroundGradientTo: '#fff',
-            decimalPlaces: 1,
-            color: (opacity = 1) => `rgba(198, 40, 40, ${opacity})`,
-            labelColor: () => '#666',
-            propsForLabels: { fontSize: 10 },
-            barPercentage: 0.6,
-          }}
-          style={{ borderRadius: 8 }}
+          initialSpacing={4}
+          disablePress
         />
+
         <View style={styles.legend}>
-          {[
-            { color: '#c62828', label: 'FTE Needed' },
-            { color: '#2e7d32', label: 'FTE Assigned' },
-            { color: '#1565c0', label: 'FTE Forecast' },
-          ].map(({ color, label }) => (
+          {LEGEND.map(({ color, label }) => (
             <View key={label} style={styles.legendItem}>
               <View style={[styles.legendDot, { backgroundColor: color }]} />
-              <Text variant="bodySmall" style={{ color: '#666' }}>{label}</Text>
+              <Text variant="bodySmall" style={styles.legendLabel}>{label}</Text>
             </View>
           ))}
         </View>
-        <Text variant="bodySmall" style={styles.note}>
-          Showing FTE Needed. Open web app for full comparison view.
-        </Text>
       </Card.Content>
     </Card>
   );
@@ -68,9 +83,9 @@ export function FteBarChart({ data }: { data: MonthlyCapacity[] }) {
 
 const styles = StyleSheet.create({
   card: { borderRadius: 8 },
-  title: { fontWeight: '700', marginBottom: 12 },
-  legend: { flexDirection: 'row', gap: 12, marginTop: 8, flexWrap: 'wrap' },
-  legendItem: { flexDirection: 'row', alignItems: 'center', gap: 4 },
-  legendDot: { width: 8, height: 8, borderRadius: 4 },
-  note: { color: '#aaa', marginTop: 4 },
+  title: { fontWeight: '700', marginBottom: 16 },
+  legend: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginTop: 12 },
+  legendItem: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  legendDot: { width: 10, height: 10, borderRadius: 5 },
+  legendLabel: { color: '#555' },
 });
