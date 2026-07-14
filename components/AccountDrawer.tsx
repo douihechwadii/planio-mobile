@@ -1,20 +1,23 @@
 import {
-    Pressable,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 import Animated, {
-    useAnimatedStyle,
-    withTiming,
+  useAnimatedStyle,
+  withTiming,
 } from "react-native-reanimated";
 
 import { useDrawer } from "@/contexts/AccountDrawerContext";
+import { useAuth } from "@/lib/AuthContext";
+import { router } from "expo-router";
 
 export default function AccountDrawer() {
   const { open, closeDrawer } = useDrawer();
+  const { logout } = useAuth();
 
   const style = useAnimatedStyle(() => ({
     transform: [
@@ -23,6 +26,18 @@ export default function AccountDrawer() {
       },
     ],
   }));
+
+  const handleLogout = async () => {
+    try {
+      closeDrawer();
+
+      await logout();
+
+      router.replace("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+};
 
   if (!open) {
     return null;
@@ -48,11 +63,9 @@ export default function AccountDrawer() {
 
         <TouchableOpacity
           style={{ marginTop: 20 }}
-          onPress={() => {
-            // logout
-          }}
+          onPress={handleLogout}
         >
-          <Text style={{ color: "red" }}>
+          <Text style={{ color: "red", fontWeight: "600" }}>
             Logout
           </Text>
         </TouchableOpacity>
