@@ -38,7 +38,7 @@ export default function DashboardScreen() {
       {/* Header */}
       <View style={styles.header}>
         <View>
-          <Text variant="headlineSmall" style={styles.title}>Capacity Dashboard</Text>
+          <Text variant="headlineSmall" style={styles.title}>Dashboard</Text>
           <Text variant="bodyMedium" style={styles.subtitle}>FTE planning overview</Text>
         </View>
         <View style={styles.yearRow}>

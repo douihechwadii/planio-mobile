@@ -1,10 +1,14 @@
+import { useDrawer } from '@/contexts/AccountDrawerContext';
 import { theme } from '@/theme/theme';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Tabs } from "expo-router";
+import { TouchableOpacity } from 'react-native';
+
 
 
 export default function TabsLayout() {
-  return <Tabs screenOptions={{
+    const { openDrawer } = useDrawer();
+    return <Tabs screenOptions={{
     headerTitleAlign: "center",
     tabBarStyle: {
         backgroundColor: theme.colors.secondary,
@@ -23,7 +27,14 @@ export default function TabsLayout() {
         backgroundColor: theme.colors.secondary
     },
 
-    headerTintColor: theme.colors.background
+    headerTintColor: theme.colors.background,
+
+    headerRight: () => (
+        <TouchableOpacity onPress={openDrawer
+         } style={{ marginRight: 15 }}>
+            <MaterialIcons name="account-circle" size={30} color="white"/>
+        </TouchableOpacity>
+    )
   }}>
     <Tabs.Screen 
     name="index"

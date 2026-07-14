@@ -1,3 +1,5 @@
+import AccountDrawer from '@/components/AccountDrawer';
+import { DrawerProvider } from '@/contexts/AccountDrawerContext';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from "expo-router";
@@ -31,9 +33,12 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <PaperProvider>
-          <RootNavigator />
-        </PaperProvider>
+        <DrawerProvider>
+          <PaperProvider>
+            <RootNavigator />
+            <AccountDrawer />
+          </PaperProvider>
+        </DrawerProvider>
       </AuthProvider>
     </QueryClientProvider>
   );
