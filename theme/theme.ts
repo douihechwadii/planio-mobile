@@ -25,7 +25,7 @@ export const theme: MD3Theme = {
         background: tokens.colors.brand.lightGray,
         surface: tokens.colors.brand.white,
 
-        onBackground: tokens.colors.brand.midnight,
+        onBackground: tokens.colors.brand.white,
         onSurface: tokens.colors.brand.midnight,
         onSurfaceVariant: tokens.colors.brand.darkGray,
 
