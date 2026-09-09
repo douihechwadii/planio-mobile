@@ -4,8 +4,7 @@ import {
   Avatar,
   Divider,
   List,
-  Text,
-  useTheme,
+  Text
 } from "react-native-paper";
 import Animated, {
   useAnimatedStyle,
@@ -23,7 +22,6 @@ import { AlertBanners } from "./dashboard/AlertBanners";
 export default function AccountDrawer() {
   const { open, closeDrawer } = useDrawer();
   const { logout} = useAuth();
-  const papertheme = useTheme();
 
   const currentYear = String(new Date().getFullYear());
   const [year] = React.useState(currentYear);

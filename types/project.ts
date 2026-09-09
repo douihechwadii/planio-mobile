@@ -1,20 +1,22 @@
-export type ProjectStatus = 'PLANNED' | 'ACTIVE' | 'COMPLETED' | 'CANCELLED'
+import { ClientSummary } from './client';
+
+export type ProjectStatus = 'PLANNED' | 'ACTIVE' | 'COMPLETED' | 'CANCELED';
 
 export interface Project {
-  id: number
-  name: string
-  client: string
-  kickoffDate: string   // 'YYYY-MM-DD'
-  goLiveDate: string    // 'YYYY-MM-DD'
-  status: ProjectStatus
+  id: number;
+  name: string;
+  client: ClientSummary;
+  kickoffDate: string; // 'YYYY-MM-DD'
+  goLiveDate: string; // 'YYYY-MM-DD'
+  status: ProjectStatus;
 }
 
 export interface MonthlyPlan {
-  id: number
-  month: string     // 'YYYY-MM'
-  daysPlanned: number   // DP
-  daysAssigned: number  // DA
-  assignable: boolean
+  id: number;
+  month: string; // 'YYYY-MM'
+  daysPlanned: number; // DP
+  daysAssigned: number; // DA
+  assignable: boolean;
 }
 
 export interface ProjectRequest {

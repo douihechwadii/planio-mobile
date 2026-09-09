@@ -2,7 +2,7 @@ import { StatusChip } from '@/components/StatusChip';
 import { MonthlyPlanGrid } from '@/components/projects/MonthlyPlanGrid';
 import { useMonthlyPlan, useProject } from '@/hooks/useProjects';
 import { theme } from '@/theme/theme';
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { ActivityIndicator, Card, Text } from 'react-native-paper';
@@ -41,8 +41,15 @@ export default function ProjectDetailScreen() {
       <Text variant="headlineSmall" style={styles.title}>
         {project.name}
       </Text>
-      <Text variant="bodyMedium" style={styles.subtitle}>
-        {project.client}
+      <Text
+        variant="bodyMedium"
+        style={styles.subtitle}
+        onPress={() => router.push({
+          pathname: '/clients/[id]',
+          params: { id: project.client.id }
+        })}
+      >
+        {project.client.name}
       </Text>
 
       <View style={styles.statusRow}>

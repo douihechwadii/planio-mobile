@@ -58,6 +58,18 @@ export default function TabsLayout() {
     <Tabs.Screen name="projects/[id]" options={{ href: null, title: "Projects Details"}} />
 
     <Tabs.Screen 
+    name="clients/index"
+    options={{
+        headerTitle: "Clients",
+        tabBarLabel: "Clients",
+        tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name='edit-document' size={size} color={color}/>
+        )
+    }} />
+
+    <Tabs.Screen name="clients/[id]" options={{ href: null, title: "Client Details"}} />
+
+    <Tabs.Screen 
     name="resources/index"
     options={{
         headerTitle: "Resources",
